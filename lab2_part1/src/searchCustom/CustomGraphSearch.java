@@ -38,12 +38,6 @@ public class CustomGraphSearch implements SearchObject {
             // Remove the node from the front of the frontier
             SearchNode currentNode = frontier.removeFirst();
 
-            // If this node's state is the goal state, build the path and return it
-            if (p.isGoalState(currentNode.getState())) {
-                path = currentNode.getPathFromRoot();
-                return path;
-            }
-
             // Mark the node as explored
             explored.add(currentNode);
 
@@ -52,6 +46,12 @@ public class CustomGraphSearch implements SearchObject {
 
             for (GridPos childState : childStates) {
                 SearchNode childNode = new SearchNode(childState, currentNode);
+
+ 				// If this node's state is the goal state, build the path and return it
+				if (p.isGoalState(childNode.getState())) {
+					path = childNode.getPathFromRoot();
+					return path;
+				}
 
                 // If the child node is not in the frontier and not explored, add it to the frontier
                 if (!explored.contains(childNode) && !frontier.contains(childNode)) {
